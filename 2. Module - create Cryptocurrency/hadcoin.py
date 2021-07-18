@@ -21,6 +21,7 @@ class Blockchain:
         self.chain = []
         self.transactions = []
         self.create_block(proof = 1, previous_hash = '0')
+        self.nodes = set()
 
     def create_block(self, proof, previous_hash):
         block = {
@@ -77,6 +78,10 @@ class Blockchain:
         previous_block = self.get_previous_block()
         return previous_block['index'] + 1
     
+    def add_node(self, address):
+        parsed_url = urlparse(address)
+        self.nodes.add(parsed_url.netloc)
+        
 # Part 2 -- Mining Our Blockchain
 
 # Creating a Web App
