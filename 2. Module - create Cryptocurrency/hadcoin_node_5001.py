@@ -70,7 +70,7 @@ class Blockchain:
         return True
 
     def add_transaction(self, sender, receiver, amount):
-        self.transaction.append({
+        self.transactions.append({
             'sender': sender,
             'receiver': receiver,
             'amount': amount,
@@ -124,7 +124,7 @@ def mine_block():
                 'index': block['index'],
                 'timestamp': block['timestamp'],
                 'proof': block['proof'],
-                'previous_hash': block['previous_hash']
+                'previous_hash': block['previous_hash'],
                 'transactions': block['transactions']}
     return jsonify(response), 200
     
@@ -165,7 +165,7 @@ def add_transaction():
 def connect_node():
     json = request.get_json()
     nodes = json.get('nodes')
-    if node is None:
+    if nodes is None:
         return "No node", 400
     for node in nodes:
         blockchain.add_node(node)
