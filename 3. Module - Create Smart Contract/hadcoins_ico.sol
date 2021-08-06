@@ -1,7 +1,7 @@
 // Hadcoins ICO
 
 // Version of compiler
-pragma solidity ^0.4.11;
+pragma solidity ^0.8.6;
 
 contract hadcoin_ico {
     
@@ -25,13 +25,21 @@ contract hadcoin_ico {
     }
     
     // Getting the equity in Hadcoins of an investor
-    function equity_in_hadcoins(address investor) external constant returns(uint) {
-        returns equity_hadcoins[investor];
+    function equity_in_hadcoins(address investor) external view returns(uint) {
+        return equity_hadcoins[investor];
     }
     
     // Getting the equity in USD of an investor
-    function equity_in_usd(address investor) external constant returns(uint) {
-        returns equity_usd[investor];
+    function equity_in_usd(address investor) external view returns(uint) {
+        return equity_usd[investor];
+    }
+
+    // Buying Hadcoins
+    function buy_hadcoins(address investor, uint usd_invested) external can_buy_hadcoins(usd_invested) {
+        uint hadcoins_bought = usd_invested * usd_to_hadcoins;
+        equity_hadcoins[investor] += hadcoins_bought;
+        equity_usd[investor] += equity_hadcoins[investor] / 1000;
+        total_hadcoins_bought += hadcoins_bought;
     }
       
     
