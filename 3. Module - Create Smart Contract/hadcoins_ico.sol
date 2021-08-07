@@ -38,8 +38,15 @@ contract hadcoin_ico {
     function buy_hadcoins(address investor, uint usd_invested) external can_buy_hadcoins(usd_invested) {
         uint hadcoins_bought = usd_invested * usd_to_hadcoins;
         equity_hadcoins[investor] += hadcoins_bought;
-        equity_usd[investor] += equity_hadcoins[investor] / 1000;
+        equity_usd[investor] = equity_hadcoins[investor] / 1000;
         total_hadcoins_bought += hadcoins_bought;
+    }
+
+    //  Selling Hadcoins 
+    function sell_hadcoins(address investor, uint hadcoins_sold) external {
+        equity_hadcoins[investor] -= hadcoins_sold;
+        equity_usd[investor] -= equity_hadcoins[investor] / 1000;
+        total_hadcoins_bought -= hadcoins_sold;
     }
       
     
